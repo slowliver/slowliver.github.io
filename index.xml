@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fn</title>
+    <link>https://fnyuki.github.io/</link>
+    <description>Recent content on fn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sat, 16 Nov 2019 23:17:48 +0900</lastBuildDate>
+    
+	<atom:link href="https://fnyuki.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>初投稿</title>
+      <link>https://fnyuki.github.io/post/test/</link>
+      <pubDate>Sat, 16 Nov 2019 23:17:48 +0900</pubDate>
+      
+      <guid>https://fnyuki.github.io/post/test/</guid>
+      <description>はじめての投稿 Hugo を導入して初めての記事を書きました。</description>
+    </item>
+    
+  </channel>
+</rss>
