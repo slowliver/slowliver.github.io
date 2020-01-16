@@ -3,22 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://fnyuki.github.io/</loc>
-    <lastmod>2019-11-16T23:17:48+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fnyuki.github.io/post/</loc>
-    <lastmod>2019-11-16T23:17:48+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fnyuki.github.io/post/test/</loc>
-    <lastmod>2019-11-16T23:17:48+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://fnyuki.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://fnyuki.github.io/</loc>
   </url>
   
   <url>
