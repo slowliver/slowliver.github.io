@@ -1,0 +1,156 @@
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-color: #18191d;
+    --sub-color: #ffffff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: #ffffff;
+    --sub-color: #18191d;
+  }
+}
+
+html {
+  color: var(--main-color);
+  background: var(--sub-color);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Roboto", sans-serif;
+  font-size: 16px;
+  font-size: calc(0.8rem + 0.25vw);
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 1.75em
+}
+
+b, strong, th {
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+article a {
+  color: #68f;
+}
+
+header time {
+  color: #8c8c8e;
+}
+
+hr {
+  border: 1px solid #8c8c8e4d;
+  margin: 2em 0;
+}
+
+blockquote {
+  background: #8c8c8e0a;
+  border-left: 4px solid #68f;
+  padding: 1px 1.5em;
+}
+
+blockquote, figure {
+  margin: 1em 0;
+}
+
+img, li {
+  margin: .5em 0;
+}
+
+img {
+  border-radius: 2px;
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  box-shadow: 0 0 0 1px #8c8c8e1f inset;
+  border-spacing: 1px;
+  width: 100%;
+}
+
+tr:hover, tr:nth-child(odd) td {
+  background: #8c8c8e10;
+}
+
+th, td {
+  box-shadow: 0 0 0 1px #8c8c8e1f;
+  padding: .5em 1em;
+}
+
+pre {
+  background: #8c8c8e22;
+  border-radius: 2px;
+  font-size: .8em;
+  margin: 1.5em 0;
+  padding: .8em 1.2em;
+  overflow-x: auto;
+}
+
+:not(pre) > code {
+  font-size: .9em;
+  background: #8c8c8e26;
+  opacity: .75;
+  border-radius: 2px;
+  margin: 0 .1em;
+  padding: .2em .4em;
+}
+
+body > header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1, header h2 {
+  margin: 0;
+}
+
+article header {
+  margin-bottom: 1.5em;
+}
+
+article header h1 {
+  padding: .2em 0;
+  margin-bottom: .5em;
+  border-bottom: 1px solid #8c8c8e36;
+}
+
+nav {
+  margin: .5em -.8em;
+}
+
+nav a {
+  margin: 0 .8em;
+}
+
+body > header, article {
+  padding: 1.5em;
+}
+
+@media (min-width: 40em) {
+  body > header, article {
+    padding: 1.5em calc(35% - 12rem);
+  }
+}
