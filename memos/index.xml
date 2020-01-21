@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Memos on stravaganza</title>
+    <link>https://fnyuki.github.io/memos/</link>
+    <description>Recent content in Memos on stravaganza</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Tue, 21 Jan 2020 17:49:12 +0900</lastBuildDate>
+    
+	<atom:link href="https://fnyuki.github.io/memos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>お世話になっている Web サイト</title>
+      <link>https://fnyuki.github.io/memos/2020-01-21-17-49-12/</link>
+      <pubDate>Tue, 21 Jan 2020 17:49:12 +0900</pubDate>
+      
+      <guid>https://fnyuki.github.io/memos/2020-01-21-17-49-12/</guid>
+      <description>グラフィックス 日本語  Alhazen render whitepoint 穴空間 もんしょの巣穴  English  The Danger Zone  </description>
+    </item>
+    
+  </channel>
+</rss>
