@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on space fn</title>
+    <title>Categories on stravaganza</title>
     <link>https://fnyuki.github.io/categories/</link>
-    <description>Recent content in Categories on space fn</description>
+    <description>Recent content in Categories on stravaganza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
+    <lastBuildDate>Tue, 21 Jan 2020 17:40:41 +0900</lastBuildDate>
     
 	<atom:link href="https://fnyuki.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
