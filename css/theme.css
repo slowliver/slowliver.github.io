@@ -19,19 +19,13 @@ html {
 
 body {
   font-family: "PT Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Roboto", sans-serif;
-  font-size: calc(0.8rem + 0.25vw);
+  font-size: 0.96rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.8;
   margin: 0;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-@media (min-width: 50em) {
-  body {
-    font-size: 1.125rem
-  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,7 +33,48 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.8em
+  font-size: 1.6em;
+  margin: 0.5em 0em;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0.55em 0em;
+}
+
+h3 {
+  font-size: 1.4em;
+  margin: 0.5em 0em;
+}
+
+h4 {
+  font-size: 1.3em;
+  margin: 0.55em 0em;
+}
+
+h5 {
+  font-size: 1.2em;
+  margin: 0.5em 0em;
+}
+
+h6 {
+  font-size: 1.1em;
+  margin: 0.55em 0em;
+}
+
+p {
+  margin: 0.57em 0em;
+}
+
+body > header > h1 {
+  font-size: 2.4em;
+  margin: 0em;
+  font-weight: bold;
+}
+
+article > header > h1 {
+  font-size: 2.0em;
+  margin: 0em;
 }
 
 b, strong, th {
@@ -112,15 +147,15 @@ tr:hover, tr:nth-child(odd) td {
 pre {
   background: #8c8c8e22;
   border-radius: 2px;
-  font-size: .8em;
+  font-size: 1.0em;
   margin: 1.5em 0;
   padding: .8em 1.2em;
   overflow-x: auto;
 }
 
 :not(pre) > code {
-  font-size: .9em;
-  background: #8c8c8e26;
+  font-size: 1.0em;
+  background: #8c8c8e22;
   opacity: .7;
   border-radius: 2px;
   margin: 0 .1em;
@@ -134,24 +169,38 @@ body > header {
   align-items: center;
 }
 
+/*
 header h1 {
   margin: 0;
 }
+*/
 
+/*
 body > header > a {
   font-size: 1.3em
 }
+*/
 
+/*
 article header {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.0em;
 }
+*/
 
 nav {
-  margin: .4em -.8em;
+  margin: 0.8em 0.0em 0.0em auto;
 }
 
 nav a {
-  margin: .4em .8em;
+  margin: 0.0em 0.8em;
+}
+
+nav a:first-child {
+  margin: 0.0em 0.8em 0.0em 1.2em;
+}
+
+nav a:last-child {
+  margin: 0.0em 0.0em 0.0em 0.8em;
 }
 
 body > header, article {
