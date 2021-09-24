@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publications on stravaganza</title>
-    <link>https://fnyuki.github.io/publications/</link>
+    <link>https://slowliver.github.io/publications/</link>
     <description>Recent content in Publications on stravaganza</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 16 Jan 2020 17:54:38 +0900</lastBuildDate>
     
-	<atom:link href="https://fnyuki.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://slowliver.github.io/publications/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
