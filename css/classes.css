@@ -38,11 +38,11 @@ div.sns-icon a {
 div.sns-icon a svg {
   width:  2.8em;
   height: 2.8em;
-  fill:   none;
-  stroke: var(--main-color);
-  stroke-width:     0.07em;
-  stroke-linecap:   round;
-  stroke-linejoin:  round;
+  fill:   var(--main-color);
+/*stroke: var(--main-color);*/
+/*stroke-width:     0.07em; */
+/*stroke-linecap:   round;  */
+/*stroke-linejoin:  round;  */
 }
 
 div.sns-icon a:hover svg {
