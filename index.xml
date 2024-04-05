@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>最近の各社地形描画のまとめ (2024)</title>
+      <link>https://slowliver.github.io/memos/recent_terrain_rendering_2024/</link>
+      <pubDate>Mon, 19 Feb 2024 15:10:24 +0900</pubDate>
+      
+      <guid>https://slowliver.github.io/memos/recent_terrain_rendering_2024/</guid>
+      <description>Terrain 描画の基礎 Terrain Rendering in &amp;lsquo;Far Cry 5&amp;rsquo; / GDC 2018  Heightfield レンダリングの基礎 Terrain 四分木 Terrain 描画 四分木のストリーム GPU アプローチ   Boots on the Ground The Terrain of Call of Duty / GDC 2021  地形の歴史  なぜ今地形システムが必要なのか？   Black Ops 4 (BO4) での新要件 新しい地形システム &amp;ldquo;Contour&amp;rdquo; Deferred Terrain Shading   Large Scale Terrain Rendering in Call of Duty / SIGGRAPH 2023  Terrain 描画の基礎 カメラ付近を細かく、遠くを粗く、といった階層的な LoD システムの初期実装は、Geometry Clipmaps: Terrain Rendering Using Nested Regular Grids によるもので、これは当時 CPU ベースの実装であった。</description>
+    </item>
+    
+    <item>
       <title>お世話になっている Web サイト</title>
       <link>https://slowliver.github.io/memos/favorite_website/</link>
       <pubDate>Tue, 21 Jan 2020 17:49:12 +0900</pubDate>

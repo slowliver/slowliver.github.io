@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<title>slowliver | 最近の各社地形描画のまとめ (2024)</title>
+<meta name="generator" content="Hugo 0.62.2" />
+
+<meta property="og:title" content="最近の各社地形描画のまとめ (2024)" />
+<meta property="og:site_name" content="slowliver" />
+<meta name="description" content="グラフィックス、ゲームプログラミング、アートのまとめ。ときどき、趣味のこと。">
+<meta property="og:description" content="グラフィックス、ゲームプログラミング、アートのまとめ。ときどき、趣味のこと。" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://slowliver.github.io/memos/recent_terrain_rendering_2024/">
+<link rel="alternate" type="application/rss+xml" href="" title="slowliver">
+<link rel="stylesheet" href="https://slowliver.github.io/css/theme.css">
+<link rel="stylesheet" href="https://slowliver.github.io/css/classes.css">
+
+<header class="dark">
+  <h1><a href="https://slowliver.github.io/">slowliver</a></h1>
+  <nav>
+    
+      <a href="/posts/">Posts</a>
+    
+      <a href="/publications/">Publications</a>
+    
+      <a href="/memos/">Memos</a>
+    
+  </nav>
+</header>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXZCH501KS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LXZCH501KS');
+</script>
+
+<article>
+  <header>
+    <a href=""></a><h1>最近の各社地形描画のまとめ (2024)</h1>
+    <time datetime="2024-02-19T15:10:24&#43;09:00">2024/02/19</time>
+  </header>
+  <ul>
+<li><a href="#terrain-%E6%8F%8F%E7%94%BB%E3%81%AE%E5%9F%BA%E7%A4%8E">Terrain 描画の基礎</a></li>
+<li><a href="#terrain-rendering-in-far-cry-5--gdc-2018">Terrain Rendering in &lsquo;Far Cry 5&rsquo; / GDC 2018</a>
+<ul>
+<li><a href="#heightfield-%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AE%E5%9F%BA%E7%A4%8E">Heightfield レンダリングの基礎</a></li>
+<li><a href="#terrain-%E5%9B%9B%E5%88%86%E6%9C%A8">Terrain 四分木</a></li>
+<li><a href="#terrain-%E6%8F%8F%E7%94%BB">Terrain 描画</a></li>
+<li><a href="#%E5%9B%9B%E5%88%86%E6%9C%A8%E3%81%AE%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0">四分木のストリーム</a></li>
+<li><a href="#gpu-%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81">GPU アプローチ</a></li>
+</ul>
+</li>
+<li><a href="#boots-on-the-ground-the-terrain-of-call-of-duty--gdc-2021">Boots on the Ground The Terrain of Call of Duty / GDC 2021</a>
+<ul>
+<li><a href="#%E5%9C%B0%E5%BD%A2%E3%81%AE%E6%AD%B4%E5%8F%B2">地形の歴史</a>
+<ul>
+<li><a href="#%E3%81%AA%E3%81%9C%E4%BB%8A%E5%9C%B0%E5%BD%A2%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%AA%E3%81%AE%E3%81%8B">なぜ今地形システムが必要なのか？</a></li>
+</ul>
+</li>
+<li><a href="#black-ops-4-bo4-%E3%81%A7%E3%81%AE%E6%96%B0%E8%A6%81%E4%BB%B6">Black Ops 4 (BO4) での新要件</a></li>
+<li><a href="#%E6%96%B0%E3%81%97%E3%81%84%E5%9C%B0%E5%BD%A2%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0-contour">新しい地形システム &ldquo;Contour&rdquo;</a></li>
+<li><a href="#deferred-terrain-shading">Deferred Terrain Shading</a></li>
+</ul>
+</li>
+<li><a href="#large-scale-terrain-rendering-in-call-of-duty--siggraph-2023">Large Scale Terrain Rendering in Call of Duty / SIGGRAPH 2023</a></li>
+</ul>
+<h1 id="terrain-描画の基礎">Terrain 描画の基礎</h1>
+<p>カメラ付近を細かく、遠くを粗く、といった階層的な LoD システムの初期実装は、<a href="https://hhoppe.com/geomclipmap.pdf">Geometry Clipmaps: Terrain Rendering Using Nested Regular Grids</a> によるもので、これは当時 CPU ベースの実装であった。</p>
+<p>CPU 実装から GPU 実装へ改善したものが、<a href="https://developer.nvidia.com/gpugems/gpugems2/part-i-geometric-complexity/chapter-2-terrain-rendering-using-gpu-based-geometry">Terrain Rendering Using GPU-Based Geometry Clipmaps</a> で GPU Gems 2 で Microsoft Research より発表されている。</p>
+<p>基本的にこれらは単一グリッドによる実装で後の礎となる技術。</p>
+<p>最近の描画実装はこのアプローチを元にデータ構造を最適化したり、ピクセルシェーダを遅延したりといったことが主流となっているようだ。</p>
+<h1 id="terrain-rendering-in-far-cry-5--gdc-2018">Terrain Rendering in &lsquo;Far Cry 5&rsquo; / GDC 2018</h1>
+<p><a href="https://www.gdcvault.com/play/1025480/Terrain-Rendering-in-Far-Cry">https://www.gdcvault.com/play/1025480/Terrain-Rendering-in-Far-Cry</a></p>
+<ul>
+<li>これまでの Far Cry シリーズよりもより小さなバジェットで Terrain を描画したかった</li>
+<li>目標バジェットはフルスクリーンで Terrain を描画したときに 2ms で描画できること</li>
+<li>このプレゼンテーションの大半はパフォーマンスに関すること
+<ul>
+<li>Terrain ツールやプロシージャル生成についてはこのプレゼンテーションでは扱わない</li>
+<li>アセットパッキングやストリーミングについても扱わない</li>
+<li>Terrain の物理演算についても扱わない</li>
+</ul>
+</li>
+</ul>
+<h2 id="heightfield-レンダリングの基礎">Heightfield レンダリングの基礎</h2>
+<ul>
+<li>GPU フレンドリーなシンプルな Heightfield を用いた Terrain の小さなエリアを描画する方法は次の通り
+<ul>
+<li>はじめにジオメトリのグリッドパッチを描画</li>
+<li>頂点シェーダーの各頂点をハイトマップテクスチャでずらす</li>
+<li>Albedo テクスチャ使ってピクセルシェーダでベースカラーを適用する</li>
+<li>法線テクスチャとライティングセットアップを使ってピクセルシェーダでライティング</li>
+</ul>
+</li>
+</ul>
+<h2 id="terrain-四分木">Terrain 四分木</h2>
+<ul>
+<li>Far Cry の Terrain タイルの最高解像度は 64x64m</li>
+<li>Far Cry ではこのサイズを「セクタ」と呼び、ワールドは 160x160 セクタで構成されている</li>
+<li>Far Cry 5 のワールドは 10x10km になる</li>
+<li>Terrain の情報は 0.5m 単位</li>
+<li>数千の高解像度タイルを描画することはできないので、LoD システムが必要になる</li>
+<li>LoD をサポートするために、地形データはクワッドツリー構造で保存されている</li>
+<li>ルートにあるワールドは常に常駐している 2km 四方のタイルのセットに分割されている</li>
+<li>我々はそれぞれの 2km タイルを四分木階層に分割した</li>
+<li>また、LoD とプレイヤからの距離に応じてタイルをストリームする</li>
+<li>つまり、ディスク上には何万ものタイルがあることになる</li>
+<li>しかし、最大で約 500 枚の常駐タイルのためにメモリーを割り当ててロードするだけで良い</li>
+<li>タイルのためのメモリーを確保し、ロードするだけでよい</li>
+<li>テクスチャフォーマットは、
+<ul>
+<li>Heightmap (R16_UNRORM, 129x129)</li>
+<li>World-space normal map (BC3, 132x132)</li>
+<li>Baked albed map (BC1, 132x132) (alpha の 1bit は穴を開けるかどうか)</li>
+</ul>
+</li>
+</ul>
+<h2 id="terrain-描画">Terrain 描画</h2>
+<ol>
+<li>四分木のノードをストリーム</li>
+<li>四分木をトラバースして地形をカバーするノードを選択する</li>
+<li>表示するノードをカリング</li>
+<li>シェーディンググループにバッチ化</li>
+<li>描画</li>
+</ol>
+<h2 id="四分木のストリーム">四分木のストリーム</h2>
+<ul>
+<li>まず、プレーヤーの周りに最も高い LoD0 をロード</li>
+<li>続いて、 その周りを LoD1 でロード</li>
+<li>そして、最も低い LoD まですべてのノードをロードし、常に常駐させる</li>
+<li>資料の図では、簡単にするために 3 つの LoD しか示していないが Far Cry 5 の四分木では 6 レベルを使用している</li>
+</ul>
+<h2 id="gpu-アプローチ">GPU アプローチ</h2>
+<ul>
+<li>Terrain 描画は初期は 1-4 を CPU 、5 を GPU で実行していた</li>
+<li>その後 1 のみを CPU 、2-5 を GPU 実行にした</li>
+<li>理由としては、
+<ul>
+<li>データは GPU でしか消費されない</li>
+<li>CPU コストをなくしたい</li>
+<li>GPU コストを減らしたい
+<ul>
+<li>最大限の頂点カリングを実現</li>
+</ul>
+</li>
+<li>他の GPU システムで Terrain データを利用可能にしたい
+<ul>
+<li>草木、岩、など</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="boots-on-the-ground-the-terrain-of-call-of-duty--gdc-2021">Boots on the Ground The Terrain of Call of Duty / GDC 2021</h1>
+<p><a href="https://research.activision.com/publications/2021/09/boots-on-the-ground--the-terrain-of-call-of-duty">https://research.activision.com/publications/2021/09/boots-on-the-ground--the-terrain-of-call-of-duty</a></p>
+<h2 id="地形の歴史">地形の歴史</h2>
+<h3 id="なぜ今地形システムが必要なのか">なぜ今地形システムが必要なのか？</h3>
+<ul>
+<li>伝統的にはマップは小さく詳細に合わせてきっちり手作りで作られていた</li>
+<li>クラシックな Call of Duty の地形機能としては下記がある
+<ul>
+<li>（円形のブラシによる）頂点編集</li>
+<li>ペイントによる基本的な高さマニピュレーション</li>
+<li>手動管理によるマテリアルレイヤ</li>
+<li>手配置の草木</li>
+</ul>
+</li>
+</ul>
+<h2 id="black-ops-4-bo4-での新要件">Black Ops 4 (BO4) での新要件</h2>
+<ul>
+<li>BO4 のマルチプレイは、より多くのコンテンツがより高頻度に、より多くのマップが高品質であった</li>
+<li>プロシージャルな地形が必要な Blackout モードやその他の広大なマップも追加された</li>
+<li>まとめると新しい地形のゴールは、
+<ul>
+<li>マテリアルとレイヤーの管理</li>
+<li>プロシージャルなクラッタを提供</li>
+<li>スカルプトと編集の高速化</li>
+<li>手作業によるディテールの精度とツールの維持</li>
+</ul>
+</li>
+<li>マップエディタで直接、高速に反復できるように、大規模なプロシージャル生成と同じくとても詳細な作業のために設計</li>
+<li>Call of Duty の出荷スケジュールと 60fps のゲームに合わせる必要がある</li>
+</ul>
+<h2 id="新しい地形システム-contour">新しい地形システム &ldquo;Contour&rdquo;</h2>
+<ul>
+<li>Contour はよりプロシージャルで大きなスケールのハイトマップ編集を可能にする</li>
+<li>そして、地表の覆い物（泥や雪など）や散乱物をリアルタイムにプロシージャルに配置</li>
+<li>レガシーな Terrain パッチのように、Terrain は個々の大きなエンティティに分割される</li>
+<li>大きな「 1 つの」Terrain を配置する訳では無い
+<ul>
+<li>複数のエンティティ</li>
+<li>配置可能・タイル可能</li>
+<li>サイズと解像度は調整可能</li>
+<li>ユニークな LOD 解決方法</li>
+</ul>
+</li>
+<li>通常のグリッドの代わりにメッシュ LOD を使用している</li>
+<li>メッシュは静的なメッシュではない</li>
+<li>2x2 のタイルは同じトライアングル数である次の LOD を上げるために入れ替わり、密度を 1/4 に減らす</li>
+<li>メッシュに関して
+<ul>
+<li>LOD は単純化された縮小ポリメッシュ</li>
+<li>LOD タイルは 4 分木に格納されている</li>
+<li>エッジはロックされるがロックをする必要はない</li>
+</ul>
+</li>
+<li>こういった LOD を使用する理由は、
+<ul>
+<li>通常のグリッドクリップマップ LOD では、形状維持のために多くのトライアングルを必要とする</li>
+<li>メッシュ LOD を使うことでトライアングルの数を大幅に減らすことができる</li>
+</ul>
+</li>
+<li>メモリコストを削減するため、頂点フォーマットは単純</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> terrain_vert
+{
+	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span> pos[<span style="color:#ae81ff">2</span>];
+	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span> LODpos[<span style="color:#ae81ff">2</span>];
+}
+</code></pre></div><ul>
+<li>シェーダでは、次の入力とする
+<ul>
+<li>メッシュタイルインデックスとトランスフォームで X/Y 位置を計算</li>
+<li>シェーダーでハイトマップサンプルと法線計算と組み合わせる</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> TerrainVSInput
+{
+	float2 pos;
+	float2 LODpos;
+}
+</code></pre></div><ul>
+<li>Terrain メッシュの定義
+<ul>
+<li>ワールド X/Y 座標は、地形のワールド空間変換とローカル位置から計算される</li>
+<li>低 LOD モーフへの座標を含む</li>
+<li>Z 座標に関しては頂点シェーダでハイトマップをサンプリング</li>
+<li>コリジョンも同一</li>
+<li>ハイトマップの勾配は頂点の法線を計算するために使用される</li>
+</ul>
+</li>
+<li>1 頂点は <code>uint16[4]</code> フォーマット</li>
+<li>最高LODは保存されず、通常のグリッドとなり、一般的なメッシュを使用することができる</li>
+</ul>
+<h2 id="deferred-terrain-shading">Deferred Terrain Shading</h2>
+<ul>
+<li>パフォーマンスの観点からすると、テッセレーションを多用するとピクセルシェーダの占有率が問題になる</li>
+<li>Deferred Terrain の描画概要は、
+<ul>
+<li>地形の Depth をレンダリング</li>
+<li>スクリーンスペースのタイルに分割</li>
+<li>複雑さに基づいてタイル分類</li>
+<li>地形マテリアルで各タイルをシェーディング</li>
+</ul>
+</li>
+<li>Depth のみを描画し、スクリーンスペースで、G-Buffer のコンテンツを埋める</li>
+<li>しかし Virtual Texture を使用しないで、OMPV（One Material Per Vertex）する場合、タイル分割で必要なものは 2 つだけ</li>
+<li>あるタイルには 1 レイヤ以上ある</li>
+<li>タイルには 1 個以上の Terrain がある</li>
+<li>Virtual Texture と Unified Height Map を使用する場合はそういったタイル分割が必要ない</li>
+<li>高さやマテリアル、法線は簡単にアクセスできる</li>
+<li>法線は Height Map の差異（gradient）から計算する</li>
+<li>タンジェントはワールド空間</li>
+<li>Surface index やタイル分割は必要ない</li>
+<li>Virutal Texture + Defrred Terrain + Deferred Lighting = Triple Deferred と言えるかも？</li>
+<li>パフォーマンス
+<ul>
+<li>Basic Terrain Shader : 1.52ms</li>
+<li>Deferred Terrain : 1.44ms</li>
+<li>Virtual texture : 0.45ms</li>
+<li>Deferred Virtual Texture : 0.37ms</li>
+</ul>
+</li>
+</ul>
+<h1 id="large-scale-terrain-rendering-in-call-of-duty--siggraph-2023">Large Scale Terrain Rendering in Call of Duty / SIGGRAPH 2023</h1>
+
+</article>
+
+
+
+</html>
